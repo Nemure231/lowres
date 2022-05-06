@@ -210,8 +210,11 @@ export default {
     isBg() {
       return this.image.src ? 'h-auto' : 'bg-teal-50  md:h-72 2xl:h-[25rem] lg:h-[20rem] sm:h-64 h-52'
     },
+    isMargin(){
+      return this.image.src ? 'mb-0' : 'mb-32'
+    },
     isHeight() {
-      return this.cropedImg.src ? ' ' : 'bg-teal-50'
+      return this.cropedImg.src ? '' : 'bg-teal-50'
     },
     isEffect() {
       return this.compressedImg ? this.compressedImg : this.cropedImg.src
@@ -238,13 +241,13 @@ export default {
   <main class="w-full flex flex-wrap flex-col justify-center items-center">
     <section class="flex-1 mt-12 mb-8 relative w-full">
       <div class="flex justify-center flex-wrap">
-        <div class="relative flex-1 2xl:max-w-7xl lg:max-w-6xl md:max-w-3xl sm:max-w-xl max-w-max lg:mx-0 md:mx-0 mx-3">
+        <div class="relative flex-1 2xl:max-w-7xl lg:max-w-6xl md:max-w-3xl sm:max-w-xl max-w-max lg:mx-0 md:mx-0 mx-4">
 
           <div
             class="flex lg:gap-12 md:gap-12 sm:gap-14 gap-4 justify-center lg:flex-row md:flex-row flex-col flex-wrap lg:items-start md:items-start items-center md:mx-3 mx-0">
 
-            <div :class="isBg"
-              class="lg:flex-1 lg:mb-0 md:mb-0 mb-32 md:flex-1 flex-none  rounded-xl  2xl:w-[20rem]  lg:w-[18rem] md:w-72 w-full">
+            <div :class="[isBg, isMargin]"
+              class="lg:flex-1 lg:mb-0 md:mb-0  md:flex-1 flex-none  rounded-xl  2xl:w-[20rem]  lg:w-[18rem] md:w-72 w-full">
               <div
                 class="flex h-full flex-col items-center justify-center lg:w-full md:w-full sm:w-full w-[15rem] mx-auto">
                 <cropper ref="cropper" :src="image.src">
@@ -288,7 +291,7 @@ export default {
             <div :class="isHeight"
               class="lg:w-[18rem] md:w-64 w-60 lg:h-[18rem] md:h-64 h-60  z-10 rounded-xl flex-none text-center">
               <div :class="isCroped" class="flex flex-col gap-3 justify-center items-center mt-4">
-                <img class="w-auto" :src="isEffect" alt="">
+                <img class="w-auto h-auto object-cover" :src="isEffect" alt="">
                 <span class="text-sm" v-text="isLowresMember"></span>
                 <input type="range" class="w-full" v-model="rangeQuality" @change="reduceQuality" min="1" max="50"
                   id="">
