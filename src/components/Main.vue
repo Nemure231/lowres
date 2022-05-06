@@ -99,7 +99,7 @@ export default {
       }
     },
     // choose link or local image
-    upload() {
+    async upload() {
       // If url exist in input
       if (this.urlImg) {
         // Get the result from link validation
@@ -107,7 +107,19 @@ export default {
         // And check the result
         if (checkUrlType === true) {
 
-          this.image.src = this.urlImg
+          // Make a fetch to check if the website have CORS policy or not
+          await fetch(this.urlImg, {
+            method: 'GET',
+            headers: {
+            },
+          })
+          .then(response => response.blob())
+          .then(data => {
+            this.image.src = this.urlImg
+          })
+          .catch((error) => {
+            alert('The url of this image is protected or blocked by CORS policy, if you want this image just download it and choose again.')
+          });
 
         } else {
           // Else return the alert message
@@ -289,7 +301,7 @@ export default {
             </div>
 
             <div :class="isHeight"
-              class="lg:w-[18rem] md:w-64 w-60 lg:h-[18rem] md:h-64 h-60  z-10 rounded-xl flex-none text-center">
+              class="lg:w-[18rem] md:w-64 w-60 mb-6 lg:h-[18rem] md:h-64 h-60  z-10 rounded-xl flex-none text-center">
               <div :class="isCroped" class="flex flex-col gap-3 justify-center items-center mt-4">
                 <img class="w-auto h-auto object-cover" :src="isEffect" alt="">
                 <span class="text-sm" v-text="isLowresMember"></span>
@@ -304,8 +316,7 @@ export default {
               </div>
             </div>
           </div>
-          <div class="flex-row flex-nowrap hidden">
-          </div>
+         
         </div>
       </div>
     </section>
