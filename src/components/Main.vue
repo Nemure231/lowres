@@ -309,7 +309,7 @@ export default {
                   id="">
 
                 <button
-                  class=" font-semibold px-6 py-1.5 lg:text-base md:text-base sm:text-sm text-xs text-white  rounded-md bg-[#0AA1DD]"
+                  class=" font-semibold px-6 py-1.5 lg:mb-0 md:mb-0 mb-14 lg:text-base md:text-base sm:text-sm text-xs text-white  rounded-md bg-[#0AA1DD]"
                   @click="saveImg()">
                   Download
                 </button>
