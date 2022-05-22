@@ -192,6 +192,7 @@ export default {
       // Reset compressed image and range quality if there's a new image
       this.compressedImg = null;
       this.rangeQuality = 25;
+      this.scaleQuality = 1;
 
       const { coordinates, canvas, } = this.$refs.cropper.getResult();
       this.coordinates = coordinates;
