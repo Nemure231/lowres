@@ -51,6 +51,7 @@ export default {
         }
       ],
       rangeQuality: 25,
+      scaleQuality: 1,
       urlImg: '',
       coordinates: {
         width: 0,
@@ -200,10 +201,14 @@ export default {
     },
     // Reduce quality function
     reduceQuality() {
-      compressAccurately(this.blobImg, this.rangeQuality).then(res => {
+      compressAccurately(this.blobImg, {
+        size: this.rangeQuality,
+        scale: this.scaleQuality,   
+      }).then(res => {
         const blobUrl = URL.createObjectURL(res)
         this.compressedImg = blobUrl
       })
+
     },
   },
   unmounted() {
@@ -249,12 +254,11 @@ export default {
 }
 </script>
 <template>
-
   <main class="w-full flex flex-wrap flex-col justify-center items-center">
     <section class="flex-1 mt-12 mb-8 relative w-full">
       <div class="flex justify-center flex-wrap">
         <div class="relative flex-1 2xl:max-w-7xl lg:max-w-6xl md:max-w-3xl sm:max-w-xl max-w-max lg:mx-0 md:mx-0 mx-4">
-
+        
           <div
             class="flex lg:gap-12 md:gap-12 sm:gap-14 gap-4 justify-center lg:flex-row md:flex-row flex-col flex-wrap lg:items-start md:items-start items-center md:mx-3 mx-0">
 
@@ -305,9 +309,10 @@ export default {
               <div :class="isCroped" class="flex flex-col gap-3 justify-center items-center mt-4">
                 <img class="w-auto h-auto object-cover" :src="isEffect" alt="">
                 <span class="text-sm" v-text="isLowresMember"></span>
-                <input type="range" class="w-full" v-model="rangeQuality" @change="reduceQuality" min="1" max="50"
-                  id="">
-
+                <label for="" class="text-xs text-left w-full font-semibold -mb-2">Quality</label>
+                <input type="range" class="w-full" v-model="rangeQuality" @change="reduceQuality" min="1" max="50">
+                <label for="" class="text-xs text-left w-full font-semibold -mb-2">Scale</label>
+                <input type="range" class="w-full" v-model="scaleQuality" @change="reduceQuality" min="0.1" max="1" step="0.01" >
                 <button
                   class=" font-semibold px-6 py-1.5 lg:mb-0 md:mb-0 mb-14 lg:text-base md:text-base sm:text-sm text-xs text-white  rounded-md bg-[#0AA1DD]"
                   @click="saveImg()">
@@ -316,7 +321,6 @@ export default {
               </div>
             </div>
           </div>
-         
         </div>
       </div>
     </section>
